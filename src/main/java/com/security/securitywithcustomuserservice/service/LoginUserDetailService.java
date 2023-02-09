@@ -1,5 +1,6 @@
 package com.security.securitywithcustomuserservice.service;
 
+import com.security.securitywithcustomuserservice.entity.LoginUser;
 import com.security.securitywithcustomuserservice.entity.User;
 import com.security.securitywithcustomuserservice.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,10 @@ public class LoginUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        Optional<User> user = userRepository.findByUname(username);
-        user.orElseThrow(() -> new UsernameNotFoundException("User not found !!"));
-
-        return null;
+        User user = userRepository.findByUname(username);
+        if(user == null){
+            throw new UsernameNotFoundException(username);
+        }
+        return new LoginUser(user);
     }
 }

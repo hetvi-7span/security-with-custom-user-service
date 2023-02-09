@@ -1,8 +1,10 @@
 package com.security.securitywithcustomuserservice.config;
 
+import com.security.securitywithcustomuserservice.service.LoginUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
@@ -12,7 +14,7 @@ public class SecurityConfig {
 
     //create inMemory user which can be used to Log in the application
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
        return null;
     }
 
@@ -20,5 +22,11 @@ public class SecurityConfig {
     public static NoOpPasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }*/
+
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new LoginUserDetailService();
+    }
 }
 
